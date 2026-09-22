@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+PROJECT="${1:-.}"
+mkdir -p "$PROJECT/app/src/main/java/com/example/streaktest"
+mkdir -p "$PROJECT/app/src/main/res/drawable" "$PROJECT/app/src/main/res/values" "$PROJECT/app/src/main/res/xml"
+cp "$ROOT/app/src/main/java/com/example/streaktest/MainActivity.kt" "$PROJECT/app/src/main/java/com/example/streaktest/MainActivity.kt"
+cp "$ROOT/app/src/main/java/com/example/streaktest/SnapAutomationService.kt" "$PROJECT/app/src/main/java/com/example/streaktest/SnapAutomationService.kt"
+cp "$ROOT/app/src/main/AndroidManifest.xml" "$PROJECT/app/src/main/AndroidManifest.xml"
+cp "$ROOT/app/src/main/res/drawable/streak_dark.png" "$PROJECT/app/src/main/res/drawable/streak_dark.png"
+cp "$ROOT/app/src/main/res/values/styles.xml" "$PROJECT/app/src/main/res/values/styles.xml"
+cp "$ROOT/app/src/main/res/values/strings.xml" "$PROJECT/app/src/main/res/values/strings.xml"
+cp "$ROOT/app/src/main/res/xml/accessibility_service_config.xml" "$PROJECT/app/src/main/res/xml/accessibility_service_config.xml"
+cp "$ROOT/app/src/main/res/xml/file_paths.xml" "$PROJECT/app/src/main/res/xml/file_paths.xml"
+echo "V5 files copied. Gradle files and local.properties were intentionally left untouched."

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_description">Automates the final Snapchat send steps after you start a test. It only targets Snapchat.</string>
+    <string name="app_name">Streak Test</string>
+    <style name="AppTheme" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#000000</item>
+    </style>
+</resources>

@@ -1,0 +1,244 @@
+package com.example.streaktest
+
+import android.accessibilityservice.AccessibilityService
+import android.accessibilityservice.GestureDescription
+import android.graphics.Path
+import android.graphics.Rect
+import android.os.Handler
+import android.os.Looper
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
+
+class SnapAutomationService : AccessibilityService() {
+
+    private val handler = Handler(Looper.getMainLooper())
+
+    private var stage = 0
+    private var lastAction = 0L
+    private var stageStarted = 0L
+
+    companion object {
+        // Based on the user's 828x1792 Snapchat screenshot.
+        private const val SHORTCUT_X = 0.268f
+        private const val SHORTCUT_Y = 0.115f
+
+        // Bottom-right "Send To" button.
+        private const val SEND_TO_X = 0.820f
+        private const val SEND_TO_Y = 0.975f
+
+        private const val ACTION_GAP = 1200L
+        private const val LAUNCH_WAIT = 2500L
+        private const val SHORTCUT_WAIT = 2500L
+        private const val RECIPIENT_WAIT = 2500L
+        private const val RECIPIENT_TIMEOUT = 10000L
+    }
+
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        if (event == null) return
+        if (event.packageName?.toString() != "com.snapchat.android") return
+
+        val root = rootInActiveWindow ?: return
+        val now = System.currentTimeMillis()
+
+        when (stage) {
+
+            // Stage 0: Snapchat Snap composer.
+            0 -> {
+                if (looksLikeSendToList(root)) {
+                    stage = 2
+                    stageStarted = now
+                    lastAction = now
+                    return
+                }
+
+                if (hasBottomSendTo(root)) {
+                    if (now - lastAction >= ACTION_GAP) {
+                        tapRelative(SEND_TO_X, SEND_TO_Y)
+                        stage = 1
+                        stageStarted = now
+                        lastAction = now
+                    }
+                }
+            }
+
+            // Stage 1: wait for the Send To list, then select 💯.
+            1 -> {
+                if (looksLikeSendToList(root)) {
+                    if (now - stageStarted >= SHORTCUT_WAIT &&
+                        now - lastAction >= ACTION_GAP
+                    ) {
+                        tapRelative(SHORTCUT_X, SHORTCUT_Y)
+                        stage = 2
+                        stageStarted = now
+                        lastAction = now
+                    }
+                } else if (now - stageStarted > 10000L) {
+                    // Give Snapchat a chance to recover by returning to composer logic.
+                    stage = 0
+                    stageStarted = now
+                }
+            }
+
+            // Stage 2: wait for the shortcut-filtered recipient list,
+            // then select Krisha. Selecting Krisha is expected to send immediately
+            // in the current Snapchat UI, so DO NOT tap a final Send button.
+            2 -> {
+                if (now - stageStarted >= RECIPIENT_WAIT &&
+                    now - lastAction >= ACTION_GAP
+                ) {
+                    if (findRecipient(root)) {
+                        stage = 3
+                        stageStarted = now
+                        lastAction = now
+                    } else if (now - stageStarted > RECIPIENT_TIMEOUT) {
+                        // Safety: never choose a random person.
+                        stage = 0
+                        stageStarted = now
+                    }
+                }
+            }
+
+            // Stage 3: give Snapchat time to complete the send.
+            3 -> {
+                if (now - stageStarted >= 1800L) {
+                    stage = 0
+                    stageStarted = now
+                }
+            }
+        }
+    }
+
+    private fun looksLikeSendToList(root: AccessibilityNodeInfo): Boolean {
+        var hasAll = false
+        var hasNewFriends = false
+
+        val queue = ArrayDeque<AccessibilityNodeInfo>()
+        queue.add(root)
+
+        while (queue.isNotEmpty()) {
+            val node = queue.removeFirst()
+
+            if (node.isVisibleToUser) {
+                val text = node.text?.toString()?.trim()
+                if (text.equals("All", ignoreCase = true)) {
+                    hasAll = true
+                }
+                if (text.equals("New Friends", ignoreCase = true)) {
+                    hasNewFriends = true
+                }
+            }
+
+            for (i in 0 until node.childCount) {
+                node.getChild(i)?.let { queue.add(it) }
+            }
+        }
+
+        return hasAll && hasNewFriends
+    }
+
+    private fun hasBottomSendTo(root: AccessibilityNodeInfo): Boolean {
+        val queue = ArrayDeque<AccessibilityNodeInfo>()
+        queue.add(root)
+
+        val screenHeight = resources.displayMetrics.heightPixels
+
+        while (queue.isNotEmpty()) {
+            val node = queue.removeFirst()
+
+            if (node.isVisibleToUser) {
+                val text = node.text?.toString()?.trim()
+
+                if (text.equals("Send To", ignoreCase = true)) {
+                    val bounds = Rect()
+                    node.getBoundsInScreen(bounds)
+
+                    if (bounds.centerY() > screenHeight * 0.78f) {
+                        return true
+                    }
+                }
+            }
+
+            for (i in 0 until node.childCount) {
+                node.getChild(i)?.let { queue.add(it) }
+            }
+        }
+
+        return false
+    }
+
+    private fun findRecipient(root: AccessibilityNodeInfo): Boolean {
+        // Try the visible name first.
+        if (clickNodeOrParent(root, "Krisha")) {
+            return true
+        }
+
+        // Then try the Snapchat username.
+        if (clickNodeOrParent(root, "krisharkive2")) {
+            return true
+        }
+
+        return false
+    }
+
+    private fun clickNodeOrParent(
+        root: AccessibilityNodeInfo,
+        target: String
+    ): Boolean {
+        val nodes = root.findAccessibilityNodeInfosByText(target)
+
+        for (node in nodes) {
+            if (!node.isVisibleToUser) continue
+
+            if (node.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
+                return true
+            }
+
+            var parent = node.parent
+            repeat(5) {
+                if (parent != null) {
+                    if (parent.isVisibleToUser &&
+                        parent.isEnabled &&
+                        parent.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                    ) {
+                        return true
+                    }
+
+                    parent = parent.parent
+                }
+            }
+        }
+
+        return false
+    }
+
+    private fun tapRelative(x: Float, y: Float) {
+        val width = resources.displayMetrics.widthPixels
+        val height = resources.displayMetrics.heightPixels
+
+        val path = Path()
+        path.moveTo(width * x, height * y)
+
+        val gesture = GestureDescription.Builder()
+            .addStroke(
+                GestureDescription.StrokeDescription(
+                    path,
+                    0,
+                    120
+                )
+            )
+            .build()
+
+        dispatchGesture(gesture, null, null)
+    }
+
+    override fun onInterrupt() {
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onServiceConnected() {
+        super.onServiceConnected()
+        stage = 0
+        lastAction = 0L
+        stageStarted = System.currentTimeMillis()
+    }
+}

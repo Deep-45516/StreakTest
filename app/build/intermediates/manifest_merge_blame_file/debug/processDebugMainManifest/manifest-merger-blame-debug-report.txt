@@ -1,0 +1,159 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.streaktest"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="35" />
+10
+11    <!-- Lets the app see/launch Snapchat on Android 11+ (package visibility). -->
+12    <queries>
+12-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:5:5-7:15
+13        <package android:name="com.snapchat.android" />
+13-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:6:9-56
+13-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:6:18-53
+14    </queries>
+15
+16    <permission
+16-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/8.9/transforms/3e85dc3a27e7bbf172ac49206d18ddee/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+17        android:name="com.example.streaktest.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+17-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/8.9/transforms/3e85dc3a27e7bbf172ac49206d18ddee/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+18        android:protectionLevel="signature" />
+18-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/8.9/transforms/3e85dc3a27e7bbf172ac49206d18ddee/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+19
+20    <uses-permission android:name="com.example.streaktest.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+20-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/8.9/transforms/3e85dc3a27e7bbf172ac49206d18ddee/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+20-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/8.9/transforms/3e85dc3a27e7bbf172ac49206d18ddee/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+21
+22    <application
+22-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:9:5-47:19
+23        android:allowBackup="true"
+23-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:10:9-35
+24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+24-->[androidx.core:core:1.15.0] /home/codespace/.gradle/caches/8.9/transforms/3e85dc3a27e7bbf172ac49206d18ddee/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
+25        android:debuggable="true"
+26        android:extractNativeLibs="false"
+27        android:label="Streak Test"
+27-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:11:9-36
+28        android:supportsRtl="true"
+28-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:12:9-35
+29        android:theme="@style/AppTheme" >
+29-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:13:9-40
+30        <provider
+31            android:name="androidx.core.content.FileProvider"
+31-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:16:13-62
+32            android:authorities="com.example.streaktest.provider"
+32-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:17:13-60
+33            android:exported="false"
+33-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:18:13-37
+34            android:grantUriPermissions="true" >
+34-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:19:13-47
+35            <meta-data
+35-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:20:13-22:54
+36                android:name="android.support.FILE_PROVIDER_PATHS"
+36-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:21:17-67
+37                android:resource="@xml/file_paths" />
+37-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:22:17-51
+38        </provider>
+39
+40        <service
+40-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:25:9-36:19
+41            android:name="com.example.streaktest.SnapAutomationService"
+41-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:26:13-50
+42            android:exported="false"
+42-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:29:13-37
+43            android:label="Streak Snapchat Automation"
+43-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:27:13-55
+44            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+44-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:28:13-79
+45            <intent-filter>
+45-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:30:13-32:29
+46                <action android:name="android.accessibilityservice.AccessibilityService" />
+46-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:31:17-92
+46-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:31:25-89
+47            </intent-filter>
+48
+49            <meta-data
+49-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:33:13-35:72
+50                android:name="android.accessibilityservice"
+50-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:34:17-60
+51                android:resource="@xml/accessibility_service_config" />
+51-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:35:17-69
+52        </service>
+53
+54        <activity
+54-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:38:9-45:20
+55            android:name="com.example.streaktest.MainActivity"
+55-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:39:13-41
+56            android:exported="true" >
+56-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:40:13-36
+57            <intent-filter>
+57-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:41:13-44:29
+58                <action android:name="android.intent.action.MAIN" />
+58-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:42:17-69
+58-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:42:25-66
+59
+60                <category android:name="android.intent.category.LAUNCHER" />
+60-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:43:17-77
+60-->/workspaces/StreakTest/app/src/main/AndroidManifest.xml:43:27-74
+61            </intent-filter>
+62        </activity>
+63
+64        <provider
+64-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:24:9-32:20
+65            android:name="androidx.startup.InitializationProvider"
+65-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:25:13-67
+66            android:authorities="com.example.streaktest.androidx-startup"
+66-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:26:13-68
+67            android:exported="false" >
+67-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:27:13-37
+68            <meta-data
+68-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+69                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+69-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+70                android:value="androidx.startup" />
+70-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+71        </provider>
+72
+73        <receiver
+73-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+74            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+74-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+75            android:directBootAware="false"
+75-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+76            android:enabled="true"
+76-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+77            android:exported="true"
+77-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+78            android:permission="android.permission.DUMP" >
+78-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
+79            <intent-filter>
+79-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+80                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+80-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
+80-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
+81            </intent-filter>
+82            <intent-filter>
+82-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+83                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+83-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
+83-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+84            </intent-filter>
+85            <intent-filter>
+85-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+86                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+86-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
+86-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+87            </intent-filter>
+88            <intent-filter>
+88-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+89                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+89-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
+89-->[androidx.profileinstaller:profileinstaller:1.4.0] /home/codespace/.gradle/caches/8.9/transforms/19a04c9820552e8deab86a79cc2427e8/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92
+90            </intent-filter>
+91        </receiver>
+92    </application>
+93
+94</manifest>

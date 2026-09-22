@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.example.streaktest.app-debug-21:/xml_file_paths.xml.flat",
+        "source": "com.example.streaktest.app-main-23:/xml/file_paths.xml"
+    },
+    {
+        "merged": "com.example.streaktest.app-debug-21:/drawable_streak_dark.png.flat",
+        "source": "com.example.streaktest.app-main-23:/drawable/streak_dark.png"
+    },
+    {
+        "merged": "com.example.streaktest.app-debug-21:/xml_accessibility_service_config.xml.flat",
+        "source": "com.example.streaktest.app-main-23:/xml/accessibility_service_config.xml"
+    }
+]
